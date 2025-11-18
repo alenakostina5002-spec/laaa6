@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор трафика Интернет</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #34495e;
+        }
+        
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+        
+        input[type="number"]:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        }
+        
+        .info {
+            background-color: #e8f4fc;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .info h3 {
+            margin-top: 0;
+            color: #2980b9;
+        }
+        
+        .conversion-info {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .highlight {
+            background-color: #fffacd;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Калькулятор трафика Интернет</h1>
+        
+        <div class="form-group">
+            <label for="kbps">Трафик в килобитах (Кб):</label>
+            <input type="number" id="kbps" min="0" step="any" placeholder="Введите значение в Кб">
+        </div>
+        
+        <div class="form-group">
+            <label for="kbytes">Трафик в килобайтах (КБ):</label>
+            <input type="number" id="kbytes" min="0" step="any" placeholder="Результат в КБ" readonly>
+        </div>
+        
+        <div class="info">
+            <h3>Как это работает?</h3>
+            <p>При вводе значения в поле "Килобиты" автоматически рассчитывается значение в килобайтах.</p>
+            <p>При получении фокуса полем "Килобайты" происходит пересчет значения на основе текущего значения в килобитах.</p>
+        </div>
+        
+        <div class="conversion-info">
+            <p><strong>Формула конвертации:</strong> 1 килобайт (КБ) = 8 килобит (Кб)</p>
+            <p>Таким образом, чтобы перевести килобиты в килобайты, нужно разделить значение на 8.</p>
+            <p>Пример: <span class="highlight">64 Кб = 64 / 8 = 8 КБ</span></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const kbpsInput = document.getElementById('kbps');
+            const kbytesInput = document.getElementById('kbytes');
+            
+            // Функция для конвертации Кб в КБ
+            function convertKbpsToKbytes() {
+                const kbpsValue = parseFloat(kbpsInput.value);
+                
+                if (!isNaN(kbpsValue) && kbpsValue >= 0) {
+                    const kbytesValue = kbpsValue / 8;
+                    kbytesInput.value = kbytesValue.toFixed(2);
+                } else {
+                    kbytesInput.value = '';
+                }
+            }
+            
+            // Обработчик события input для поля Кб
+            kbpsInput.addEventListener('input', convertKbpsToKbytes);
+            
+            // Обработчик события focus для поля КБ
+            kbytesInput.addEventListener('focus', function() {
+                // Пересчитываем значение при получении фокуса
+                convertKbpsToKbytes();
+            });
+        });
+    </script>
+</body>
+</html>
